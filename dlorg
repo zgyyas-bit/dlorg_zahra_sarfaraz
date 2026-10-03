@@ -2,17 +2,9 @@
 
 DOWNLOADS="$HOME/Downloads"
 
-mkdir -p "$DOWNLOADS/text"
-mkdir -p "$DOWNLOADS/pdfs"
-mkdir -p "$DOWNLOADS/docs"
-mkdir -p "$DOWNLOADS/images"
-mkdir -p "$DOWNLOADS/videos"
-mkdir -p "$DOWNLOADS/audio"
-mkdir -p "$DOWNLOADS/archives"
-mkdir -p "$DOWNLOADS/other"
+organize_file() {
+	filename="$1"
 
-inotifywait -m -e close_write -e moved_to "$DOWNLOADS" | while read -r directory event filename
-do
 	case "$filename" in
 		*.txt)
 		mv "$DOWNLOADS/$filename" "$DOWNLOADS/text/"
@@ -39,5 +31,34 @@ do
 		mv "$DOWNLOADS/$filename" "$DOWNLOADS/other/"
 		;;
 	esac
+}
+
+mkdir -p "$DOWNLOADS/text"
+mkdir -p "$DOWNLOADS/pdfs"
+mkdir -p "$DOWNLOADS/docs"
+mkdir -p "$DOWNLOADS/images"
+mkdir -p "$DOWNLOADS/videos"
+mkdir -p "$DOWNLOADS/audio"
+mkdir -p "$DOWNLOADS/archives"
+mkdir -p "$DOWNLOADS/other"
+
+# Organize files that already exist in Downloads
+for file in "$DOWNLOADS"/*
+do
+	if [ -f "$file" ]; then
+	organize_file "$(basename "$file")"
+	
+	fi
 done
+
+# Monitor Downloads for new or moved files
+inotifywait -m -e close_write -e moved_to "$DOWNLOADS" | while read -r directory event filename
+
+do	
+	if [ -f "$DOWNLOADS/$filename" ]; then
+		organize_file "$filename"
+
+	fi
+done
+
 
