@@ -1,2 +1,18 @@
-#!/bin/bash
+#!/usr/bin/env bash
+
+DOWNLOADS="$HOME/Downloads"
+
+mkdir -p "$DOWNLOADS/text"
+mkdir -p "$DOWNLOADS/pdfs"
+mkdir -p "$DOWNLOADS/docs"
+mkdir -p "$DOWNLOADS/images"
+mkdir -p "$DOWNLOADS/videos"
+mkdir -p "$DOWNLOADS/audio"
+mkdir -p "$DOWNLOADS/archives"
+mkdir -p "$DOWNLOADS/other"
+
+inotifywait -m -e close_write -e moved_to "$DOWNLOADS" | while read -r directory event filename
+do
+	echo "Detected: $filename"
+done
 
