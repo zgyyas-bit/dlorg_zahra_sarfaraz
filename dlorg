@@ -13,6 +13,31 @@ mkdir -p "$DOWNLOADS/other"
 
 inotifywait -m -e close_write -e moved_to "$DOWNLOADS" | while read -r directory event filename
 do
-	echo "Detected: $filename"
+	case "$filename" in
+		*.txt)
+		mv "$DOWNLOADS/$filename" "$DOWNLOADS/text/"
+		;;
+		*.pdf)
+		mv "$DOWNLOADS/$filename" "$DOWNLOADS/pdfs/"
+		;;
+		*.doc|*.docx|*.odt)
+		mv "$DOWNLOADS/$filename" "$DOWNLOADS/docs/"
+		;;
+		*.jpg|*.jpeg|*.png|*.gif)
+		mv "$DOWNLOADS/$filename" "$DOWNLOADS/images/"
+		;;
+		*.mp4|*.mkv|*.avi)
+		mv "$DOWNLOADS/$filename" "$DOWNLOADS/videos/"
+		;;
+		*.mp3|*.wav)
+		mv "$DOWNLOADS/$filename" "$DOWNLOADS/audio/"
+		;;
+		*.zip|*.tar|*.gz)
+		mv "$DOWNLOADS/$filename" "$DOWNLOADS/archives/"
+		;;
+		*)
+		mv "$DOWNLOADS/$filename" "$DOWNLOADS/other/"
+		;;
+	esac
 done
 
