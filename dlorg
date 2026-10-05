@@ -7,27 +7,35 @@ organize_file() {
 
 	case "$filename" in
 		*.txt)
+		mkdir -p "$DOWNLOADS/text"
 		mv "$DOWNLOADS/$filename" "$DOWNLOADS/text/"
 		;;
 		*.pdf)
+		mkdir -p "$DOWNLOADS/pdfs"
 		mv "$DOWNLOADS/$filename" "$DOWNLOADS/pdfs/"
 		;;
 		*.doc|*.docx|*.odt)
+		mkdir -p "$DOWNLOADS/docs"
 		mv "$DOWNLOADS/$filename" "$DOWNLOADS/docs/"
 		;;
 		*.jpg|*.jpeg|*.png|*.gif)
+		mkdir -p "$DOWNLOADS/images"
 		mv "$DOWNLOADS/$filename" "$DOWNLOADS/images/"
 		;;
 		*.mp4|*.mkv|*.avi)
+		mkdir -p "$DOWNLOADS/video"
 		mv "$DOWNLOADS/$filename" "$DOWNLOADS/videos/"
 		;;
 		*.mp3|*.wav)
+		mkdir -p "$DOWNLOADS/audio"
 		mv "$DOWNLOADS/$filename" "$DOWNLOADS/audio/"
 		;;
 		*.zip|*.tar|*.gz)
+		mkdir -p "$DOWNLOADS/archives"
 		mv "$DOWNLOADS/$filename" "$DOWNLOADS/archives/"
 		;;
 		*)
+		mkdir -p "$DOWNLOADS/other"
 		mv "$DOWNLOADS/$filename" "$DOWNLOADS/other/"
 		;;
 	esac
