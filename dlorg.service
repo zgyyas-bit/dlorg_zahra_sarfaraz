@@ -1,0 +1,13 @@
+[Unit]
+Description=Downloads Organizer
+After=local-fs.target
+
+[Service]
+Type=simple
+User=zahra
+ExecStart=/usr/bin/bash /home/zahra/Documents/dlorg_zahra_sarfaraz/dlorg
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
+
